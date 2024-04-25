@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<!-- Console appender -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %p %C [%t] %m%n" />
+
+		</Console>
+
+		<!-- File appender with append="false" -->
+		<File name="File" fileName="logs/application.log" append="false">
+			<PatternLayout pattern="%d %p %C [%t] %m%n" />
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<!-- Root logger -->
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
+</Configuration>
+
+<!--/* Day 66 - 15th April
+ * POM_9_Log4j_Logger_Listener_extent_report_screenshot.mp4
+ * part xx */-->
+
+
+<!--This is a standad template. file name can be anything-->

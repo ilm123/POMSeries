@@ -1,22 +1,31 @@
 package com.qa.opencart.factory;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.qa.opencart.errors.AppError;
 import com.qa.opencart.exceptions.BrowserException;
 import com.qa.opencart.exceptions.FrameworkException;
+import com.qa.opencart.logger.Log;
 
 /* Day 65 - 11th April
  * POM_8_MultiEnvSetup_MavenCommands_CommandLineArguments.mp4
+ * part -- */
+
+/* Day 66 - 15th April
+ * POM_9_Log4j_Logger_Listener_extent_report_screenshot.mp4
  * part -- */
 
 public class DriverFactory {
@@ -25,11 +34,13 @@ public class DriverFactory {
 	Properties prop;
 	OptionsManager optionsManager;
 	public static String highlight;
+	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 
 	public WebDriver initDriver(Properties prop) {
 
 		String browserName = prop.getProperty("browser");
-		System.out.println("Browser Name is: " + browserName);
+//		System.out.println("Browser Name is: " + browserName);
+		Log.info("Browser name is: " + browserName);
 
 		highlight = prop.getProperty("highlight"); // initialized
 
@@ -37,32 +48,41 @@ public class DriverFactory {
 
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
-			driver = new ChromeDriver(optionsManager.getChromeOptions());
+//			driver = new ChromeDriver(optionsManager.getChromeOptions());
+			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
 			break;
 
 		case "firefox":
-			driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
+//			driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
+			tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
 			break;
 
 		case "edge":
-			driver = new EdgeDriver(optionsManager.getEdgeOptions());
+//			driver = new EdgeDriver(optionsManager.getEdgeOptions());
+			tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
 			break;
 
 		case "safari":
-			driver = new SafariDriver();
+//			driver = new SafariDriver(); // there are no options for safari driver
+			tlDriver.set(new SafariDriver());
 			break;
 
 		default:
-			System.out.println("Please pass the right browser " + browserName);
+//			System.out.println("Please pass the right browser " + browserName);
+			Log.error("Please pass the right browser... " + browserName);
 			throw new BrowserException("NO BROWSER FOUND " + browserName);
 		}
 
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.get(prop.getProperty("url"));
+		getDriver().manage().deleteAllCookies();
+		getDriver().manage().window().maximize();
+		getDriver().get(prop.getProperty("url"));
 		// Don't use implicit wait bcz there are util methods with explicit wait and
 		// shouldn't be mixed
-		return driver;
+		return getDriver();
+	}
+
+	public static WebDriver getDriver() { // A wrapper on top of the get method
+		return tlDriver.get();
 	}
 
 	// envName=qa,stage,prod,uat,dev
@@ -114,6 +134,26 @@ public class DriverFactory {
 		return prop;
 	}
 
+	/**
+	 * take screenshot
+	 */
+
+	public static String getScreenshot(String methodName) {
+		File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);// temp directory
+		String path = System.getProperty("user.dir") + "/screenshot/" + methodName + "_" + System.currentTimeMillis()
+				+ ".png";
+
+		File destination = new File(path);
+
+		try {
+			FileHandler.copy(srcFile, destination);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return path;
+	}
+
 }
 
 //public Properties initProp2() {
@@ -141,3 +181,15 @@ public class DriverFactory {
 
 // ----
 // common try catch block instead of writing it for every line
+
+// ---
+// what is the difference between the println statement and the log? which one is faster?
+// log is faster. println will consume the resources. 
+// first it will use the system class. Then out variable.out variable will call println
+// syso is very raw type of log. which class, date time info
+// With the log we get the proper information along with our custom message
+
+// tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions())); internally do the top casting and launch the chrome browser
+
+// ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE)
+// type cast the driver as TakesScreenshot. This is like converting the driver to JS executer and using .executeScript()

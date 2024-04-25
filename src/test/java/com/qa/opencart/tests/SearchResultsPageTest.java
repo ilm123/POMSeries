@@ -3,9 +3,11 @@ package com.qa.opencart.tests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.qa.opencart.base.BaseTest;
+import com.qa.opencart.listeners.ExtentReportListener;
 
 /* Day 60 - 3rd April
  * POM_3_AccountsPage_AppConstant_ResultsPage_PageChainingModel.mp4

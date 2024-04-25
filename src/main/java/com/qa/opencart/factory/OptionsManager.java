@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import com.qa.opencart.logger.Log;
+
 /* Day 64 - 10th April
  * POM_7_TestRunners_HeadLess_Incognito_Highlight_AppErrors_ParallelRun.mp4
  * part -- */
@@ -24,12 +26,14 @@ public class OptionsManager {
 	public ChromeOptions getChromeOptions() {
 		co = new ChromeOptions();
 		if (Boolean.parseBoolean(prop.getProperty("headless").trim())) {		
-			System.out.println("Running chrome in headless mode");
+//			System.out.println("Running chrome in headless mode");
+			Log.info("Running chrome in headless mode");
 			co.addArguments("--headless");				
 		}
 		
 		if (Boolean.parseBoolean(prop.getProperty("incognito").trim())) {				
-			co.addArguments("--incognito");				
+			co.addArguments("--incognito");
+			Log.info("Running chrome in incognito mode");
 		}
 		
 		return co;

@@ -1,16 +1,23 @@
 package com.qa.opencart.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.qa.opencart.base.BaseTest;
 import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.errors.AppError;
+import com.qa.opencart.listeners.ExtentReportListener;
 
 /* Day 64 - 10th April
  * POM_7_TestRunners_HeadLess_Incognito_Highlight_AppErrors_ParallelRun.mp4
  * part -- */
 
+/* Day 66 - 15th April
+ * POM_9_Log4j_Logger_Listener_extent_report_screenshot.mp4
+ * part -- */
+
+@Listeners (ExtentReportListener.class)
 public class LoginPageTest extends BaseTest {
 
 	@Test (priority = 1)

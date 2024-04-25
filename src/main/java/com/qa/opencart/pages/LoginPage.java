@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.qa.opencart.constants.AppConstants;
+import com.qa.opencart.logger.Log;
 import com.qa.opencart.utils.ElementUtil;
 import com.qa.opencart.utils.TimeUtil;
 
@@ -15,6 +16,10 @@ import com.qa.opencart.utils.TimeUtil;
 
 /* Day 64 - 10th April
  * POM_7_TestRunners_HeadLess_Incognito_Highlight_AppErrors_ParallelRun.mp4
+ * part -- */
+
+/* Day 66 - 15th April
+ * POM_9_Log4j_Logger_Listener_extent_report_screenshot.mp4
  * part -- */
 
 public class LoginPage {
@@ -39,7 +44,8 @@ public class LoginPage {
     // 3. Public Page Actions/Method
     public String getLoginPageTitle() {
     	String title = eleUtil.waitForTitleIs(AppConstants.LOGIN_PAGE_TITLE, TimeUtil.DEFAULT_MEDIUM_TIME);    	
-    	System.out.println("Login page title is : " + title);
+//    	System.out.println("Login page title is : " + title);
+    	Log.info("Login page title is : " + title);
     	return title;
     }
     
