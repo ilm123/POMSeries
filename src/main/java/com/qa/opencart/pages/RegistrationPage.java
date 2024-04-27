@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.utils.ElementUtil;
 
+import io.qameta.allure.Step;
+
 //POM_3_AccountsPage_AppConstant_ResultsPage_PageChainingModel.mp4
 
 /* Day 62 - 8th April
@@ -36,6 +38,7 @@ public class RegistrationPage {
 		eleUtil = new ElementUtil(driver);
 	}
 
+	@Step("User registration")
 	public boolean userRegistration(String firstName, String lastName, String email, String telephone, String password,
 			String subscribe) {
 		eleUtil.waitforElementVisible(this.firstName, 10).sendKeys(firstName);

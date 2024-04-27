@@ -19,6 +19,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.qa.opencart.exceptions.ElementException;
 import com.qa.opencart.factory.DriverFactory;
 
+import io.qameta.allure.Step;
+
 public class ElementUtil {
 
 	private WebDriver driver; // It is not initialized. The current value of driver is the default value. The
@@ -93,6 +95,7 @@ public class ElementUtil {
 
 	// static will not work in parallel mode. So all the selenium related utilities
 	// are never created with the static keyword
+	@Step("getting web element using {0}")
 	public WebElement getElement(By locator) {
 		WebElement element = null; // for the time being
 
@@ -114,6 +117,7 @@ public class ElementUtil {
 		return element;
 	}
 
+	@Step("entering value : {0} in element : {1}")
 	public void doSendKeys(By locator, String value) {
 		nullBlankCheck(value);
 		getElement(locator).clear();
@@ -129,6 +133,7 @@ public class ElementUtil {
 		getElement(locatorType, locatorValue).sendKeys(value);
 	}
 
+	@Step("clicking on element using locatore: {0}")
 	public void doClick(By locator) {
 		getElement(locator).click();
 	}
@@ -153,6 +158,7 @@ public class ElementUtil {
 		return getElement(locator).getAttribute(attrName);
 	}
 
+	@Step("checking element {0} is displayed...")
 	public boolean isElementDisplayed(By locator) {
 		return getElement(locator).isDisplayed();
 	}
@@ -422,6 +428,7 @@ public class ElementUtil {
 	 * @param timeOut
 	 * @return
 	 */
+	@Step("waiting for element using locator : {0} within timeout {1}")
 	public WebElement waitforElementVisible(By locator, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -460,6 +467,7 @@ public class ElementUtil {
 		return driver.getTitle();
 	}
 
+	@Step("waiting for the expected title")
 	public String waitForTitleIs(String title, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 

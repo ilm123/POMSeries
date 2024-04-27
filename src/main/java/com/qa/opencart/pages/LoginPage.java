@@ -10,6 +10,8 @@ import com.qa.opencart.logger.Log;
 import com.qa.opencart.utils.ElementUtil;
 import com.qa.opencart.utils.TimeUtil;
 
+import io.qameta.allure.Step;
+
 /* Day 62 - 8th April
  * POM_5_DataProvider_RegistrationPage_RandomStringUtils.mp4
  * part -- */
@@ -42,6 +44,7 @@ public class LoginPage {
     }
     
     // 3. Public Page Actions/Method
+    @Step("getting login page title...")
     public String getLoginPageTitle() {
     	String title = eleUtil.waitForTitleIs(AppConstants.LOGIN_PAGE_TITLE, TimeUtil.DEFAULT_MEDIUM_TIME);    	
 //    	System.out.println("Login page title is : " + title);
@@ -49,16 +52,19 @@ public class LoginPage {
     	return title;
     }
     
+    @Step("getting login page URL...")
     public String getLoginPageUrl() {
     	String url = eleUtil.waitForURLContains(AppConstants.LOGIN_PAGE_URL_FRACTION, TimeUtil.DEFAULT_MEDIUM_TIME);
     	System.out.println("Login page url is:" + url);
     	return url;
     }
     
+    @Step("getting the state of forgot pwd link...")
     public boolean isForgotPasswordLinkExist() {
     	return eleUtil.isElementDisplayed(forgotPwd);
     }
     
+    @Step("login with username:{0} and password:{1}")
     public AccountsPage doLogin(String username, String pwd) {
     	System.out.println("user creds:" + username + ":" + pwd);
     	eleUtil.waitforElementVisible(emailID, TimeUtil.DEFAULT_LONG_TIME).sendKeys(username);
@@ -67,6 +73,7 @@ public class LoginPage {
     	return new AccountsPage(driver);
     }
     
+    @Step("navigating to the registration page...")
     public RegistrationPage navigateToRegistrationPage() {
     	eleUtil.waitforElementVisible(registerLink, TimeUtil.DEFAULT_LONG_TIME).click();
     	return new RegistrationPage(driver);

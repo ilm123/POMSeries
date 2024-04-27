@@ -11,6 +11,8 @@ import com.qa.opencart.utils.CSVUtil;
 import com.qa.opencart.utils.ExcelUtil;
 import com.qa.opencart.utils.StringUtil;
 
+import io.qameta.allure.Step;
+
 /* Day 63 - 9th April
  * POM_6_Apache_POI_Excel_CSV_Reader_DataProvider.mp4
  * part -- */
@@ -39,6 +41,7 @@ public class RegistrationPageTest extends BaseTest {
 		return CSVUtil.csvData(AppConstants.REGISTER_SHEET_CSV_NAME);	
 	}
 
+	@Step("Checking user registration")
 //	@Test(dataProvider = "userRegistrationTestDataFromCSV")
 	@Test(dataProvider = "csvregdata") // another way to refer the method
 	public void userRegistrationTest(String firstName, String lastName, String telephone, String password,
@@ -71,3 +74,6 @@ public class RegistrationPageTest extends BaseTest {
 // A. we use a hybrid framework with the Data Driven Approach
 
 // What is the Design Pattern? Page Object Model design pattern, with utilities and testng
+
+//------------------------
+// Do not add any allure annotations for DataProviders. It is not a step
