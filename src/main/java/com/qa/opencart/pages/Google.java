@@ -7,7 +7,10 @@ public class Google {
 	public void doLogin() {
 		System.out.println("Ilma - Login");
 		System.out.println("Done");
-
+	}
+	
+	public void register() {
+		System.out.println("register");
 	}
 
 }
