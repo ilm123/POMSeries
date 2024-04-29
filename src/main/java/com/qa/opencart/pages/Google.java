@@ -13,4 +13,8 @@ public class Google {
 		System.out.println("register");
 	}
 
+	public void forgotPwd() {
+		System.out.println("forgotPwd");
+	}
+
 }
