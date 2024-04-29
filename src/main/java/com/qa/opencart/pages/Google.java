@@ -10,4 +10,8 @@ public class Google {
 
 	}
 
+	public void forgotPwd() {
+		System.out.println("forgotPwd");
+	}
+
 }
