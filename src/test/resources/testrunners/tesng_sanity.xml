@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="OpenCart Regression Suite" verbose="3" thread-count="5"
-	parallel="tests">	
+<suite name="OpenCart Sanity Suite" verbose="3" thread-count="5"
+	parallel="tests">
+	
+	<listeners>
+		<listener
+			class-name="com.qa.opencart.listeners.ExtentReportListener" />
+		<listener
+			class-name="com.qa.opencart.listeners.TestAllureListener" />
+		<listener
+			class-name="com.qa.opencart.listeners.AnnotationTransformer" />
+	</listeners>	
 
-	<test name="Login Page Test chrome">
+	<test name="Login Page Test chrome_sanity">
 		<parameter name="browser" value="chrome" />
 
 		<classes>
